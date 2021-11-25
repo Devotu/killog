@@ -1,0 +1,27 @@
+<section class="plaque v-space-t">
+  <form phx-submit="add">
+    <div class="box">
+      <p>Player</p>
+      <div class="clicksize">
+        <p class="label v-space">Name:
+          <div class="">
+            <input class="" type="text" name="name"  step="1" value="" placeholder="Name"/>
+          </div>
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-spread row append-b flex-right-row">
+        <button
+            class="flexi box-fill"
+            phx-disable-with="Adding..."
+        >
+            Add
+        </button>
+    </div>
+  </form>
+</section>
+
+<section class="v-space-tl footer">
+  <p class="alert alert-success"><%= live_flash(@flash, :feedback) %></p>
+</section>

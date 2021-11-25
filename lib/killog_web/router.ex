@@ -17,7 +17,8 @@ defmodule KillogWeb.Router do
   scope "/", KillogWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", MainLive, :index
+    live "/player/new", PlayerLive, :index
   end
 
   # Other scopes may use custom stacks.
