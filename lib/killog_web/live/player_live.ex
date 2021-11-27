@@ -1,7 +1,6 @@
 defmodule KillogWeb.PlayerLive do
   use KillogWeb, :live_view
 
-  alias Killog.Id
   alias Killog.Modules.Player
 
   @impl true
@@ -16,8 +15,6 @@ defmodule KillogWeb.PlayerLive do
         {:noreply, put_flash(socket, :error, "#{name} not added,  #{e}")}
       {:ok} ->
         {:noreply, put_flash(socket, :feedback, "#{name} added")}
-      _ ->
-        {:noreply, put_flash(socket, :error, "#{name} not added")}
     end
   end
 end
