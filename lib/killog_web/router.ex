@@ -19,6 +19,7 @@ defmodule KillogWeb.Router do
 
     live "/", MainLive, :index
     live "/player/new", PlayerLive, :index
+    live "/tacop/new", TacopLive, :index
   end
 
   # Other scopes may use custom stacks.
