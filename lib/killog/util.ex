@@ -78,4 +78,26 @@ defmodule Killog.Util do
 
   defp is_type?(value, :atom) when is_atom(value), do: true
   defp is_type?(_value, :atom), do: false
+
+  def validate_name(term) when is_bitstring(term) do
+    case [is_less_than_50?(term), only_valid_characters?(term)] do
+      [false, _] ->
+        Error.new("name to long")
+      [_, false] ->
+        Error.new("name includes invalid characters")
+      _ ->
+        {:ok}
+    end
+  end
+
+  defp is_less_than_50?(term) when is_bitstring(term) do
+    String.length(term) < 50
+  end
+
+  #just to get rid of obviously errorus stuff
+  defp only_valid_characters?(term) when is_bitstring(term) do
+    term
+    |> String.contains?(["(", ")", ":", ";", "{", "}", "+", "!", "?", "'", "/", "\\"])
+    |> then(&(!&1))
+  end
 end

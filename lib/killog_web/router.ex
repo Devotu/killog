@@ -18,6 +18,7 @@ defmodule KillogWeb.Router do
     pipe_through :browser
 
     live "/", MainLive, :index
+    live "/equipment/new", EquipmentLive, :index
     live "/player/new", PlayerLive, :index
     live "/tacop/new", TacopLive, :index
     live "/weapon/new", WeaponLive, :index

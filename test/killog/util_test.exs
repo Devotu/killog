@@ -35,4 +35,11 @@ defmodule Killog.UtilTest do
     assert {:error, "key d not found"} == Util.validate(input, "d", [:list, :string])
     assert {:error, "input a contains other than string"} == Util.validate(input, "a", [:list, :string])
   end
+
+  test "valid name" do
+    assert {:ok} = Util.validate_name "test123"
+    assert {:ok} = Util.validate_name "something long with spaces"
+    assert {:error, "name to long"} = Util.validate_name "something longer than 50 characters which would just be redicilous"
+    assert {:error, "name includes invalid characters"} = Util.validate_name "something containing funky stuff like ' and )"
+  end
 end
