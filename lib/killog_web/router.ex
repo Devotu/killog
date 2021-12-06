@@ -22,6 +22,7 @@ defmodule KillogWeb.Router do
     live "/fireteam/new", FireteamLive, :index
     live "/player/new", PlayerLive, :index
     live "/tacop/new", TacopLive, :index
+    live "/unit/new", UnitLive, :index
     live "/weapon/new", WeaponLive, :index
   end
 

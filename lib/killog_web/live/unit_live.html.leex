@@ -1,0 +1,95 @@
+<section class="plaque v-space-t">
+  <form phx-submit="add" phx-change="update">
+    <div class="box">
+      <p>Unit</p>
+      <select class="clicksize" name="faction" id="faction">
+        <%= for %{id: id, name: name} <- @factions do %>
+          <%= if @faction != nil && id == @faction.id do %>
+            <option value="<%= id %>" selected><%= name %></option>
+          <% else %>
+            <option value="<%= id %>"><%= name %></option>
+          <% end %>
+        <% end %>
+      </select>
+      <select class="clicksize" name="fireteam" id="fireteam">
+        <%= for %{id: id, name: name} <- @available_fireteams do %>
+          <option value="<%= id %>"><%= name %></option>
+        <% end %>
+      </select>
+      <div class="clicksize">
+        <p class="label v-space">Move:
+          <div class="">
+            <input class="" type="text" name="m"  value="" placeholder="M"/>
+          </div>
+        </p>
+      </div>
+      <div class="clicksize">
+        <p class="label v-space">Action point limit:
+          <div class="">
+            <input class="" type="number" name="apl"  step="1" value="" placeholder="APL"/>
+          </div>
+        </p>
+      </div>
+      <div class="clicksize">
+        <p class="label v-space">Group activation:
+          <div class="">
+            <input class="" type="number" name="ga"  step="1" value="" placeholder="GA"/>
+          </div>
+        </p>
+      </div>
+      <div class="clicksize">
+        <p class="label v-space">Defence:
+          <div class="">
+            <input class="" type="number" name="df"  step="1" value="" placeholder="DF"/>
+          </div>
+        </p>
+      </div>
+      <div class="clicksize">
+        <p class="label v-space">Save:
+          <div class="">
+            <input class="" type="number" name="sv"  step="1" value="" placeholder="SV"/>
+          </div>
+        </p>
+      </div>
+      <div class="clicksize">
+        <p class="label v-space">Wounds:
+          <div class="">
+            <input class="" type="number" name="w"  step="1" value="" placeholder="W"/>
+          </div>
+        </p>
+      </div>
+      <div class="clicksize">
+        <p class="label v-space">Weapons:</p>
+        <p class="label v-space">Available:
+          <%= for %{id: id, name: name} <- @available_weapons do %>
+            <button type="button" phx-click="add_weapon" value="<%= id %>">
+              <%= name %>
+            </button>
+          <% end %>
+        </p>
+        <p class="label v-space">Using:
+          <%= for %{id: id, name: name} <- @weapons do %>
+            <button type="button" phx-click="remove_weapon" value="<%= id %>">
+              <%= name %>
+            </button>
+          <% end %>
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-spread row append-b flex-right-row">
+        <button
+            class="flexi box-fill"
+            phx-disable-with="Adding..."
+        >
+            Add
+        </button>
+    </div>
+  </form>
+</section>
+<section>
+</section>
+
+<section class="v-space-tl footer">
+  <p class="alert alert-success"><%= live_flash(@flash, :feedback) %></p>
+</section>

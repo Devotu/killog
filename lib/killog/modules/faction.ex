@@ -3,6 +3,7 @@ defmodule Killog.Modules.Faction do
 
   alias Killog.Modules.Faction
 
+  @module_name :faction
   @factions [
     {:marines, "Space Marines"},
     {:chaos, "Chaos Marines"},
@@ -17,6 +18,10 @@ defmodule Killog.Modules.Faction do
   #actual cannot be defined in same as struct defining module
   defp new({id, name}) do
     %Faction{id: id, name: name}
+  end
+
+  def module_name() do
+    @module_name
   end
 
   def select(selected) when is_atom(selected) do

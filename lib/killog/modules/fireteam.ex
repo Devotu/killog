@@ -24,4 +24,11 @@ defmodule Killog.Modules.Fireteam do
         Data.save_state_with_log(id, state, event)
     end
   end
+
+  def select_by_faction(%Faction{} = faction) do
+    @module_name
+    |> Data.list_ids()
+    |> Enum.map(fn id -> Data.recall_state(id) end)
+    |> Enum.filter(fn ft -> faction.id == ft.faction end)
+  end
 end

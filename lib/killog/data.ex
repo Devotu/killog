@@ -22,4 +22,16 @@ defmodule Killog.Data do
   def recall_state(id) when is_bitstring(id) do
     Trail.recall(id)
   end
+
+  def list_ids(module) when is_atom(module) do
+    module
+    |> to_namespace()
+    |> Trail.list_contains()
+  end
+
+  defp to_namespace(module) when is_atom(module) do
+    module
+    |> Atom.to_string()
+    |> String.trim_leading(":")
+  end
 end

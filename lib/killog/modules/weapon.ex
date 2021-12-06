@@ -65,4 +65,15 @@ defmodule Killog.Modules.Weapon do
     |> Util.validate("critical", [:list, :string])
     |> Util.validate("faction", :atom)
   end
+
+  def select_by_faction(%Faction{} = faction) do
+    @module_name
+    |> Data.list_ids()
+    |> Enum.map(fn id -> Data.recall_state(id) end)
+    |> Enum.filter(fn ft -> faction.id == ft.faction end)
+  end
+
+  def select_by_id(id) when is_bitstring(id) do
+    Data.recall_state(id)
+  end
 end
