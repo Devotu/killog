@@ -12,6 +12,9 @@
         <% end %>
       </select>
       <select class="clicksize" name="fireteam" id="fireteam">
+        <%= if @fireteam != nil do %>
+          <option value="<%= @fireteam.id %>"><%= @fireteam.name %></option>
+        <% end %>
         <%= for %{id: id, name: name} <- @available_fireteams do %>
           <option value="<%= id %>"><%= name %></option>
         <% end %>

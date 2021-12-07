@@ -12,16 +12,31 @@ defmodule KillogWeb.UnitLive do
     faction = Faction.factions() |> List.first()
     fireteams = Fireteam.select_by_faction(faction)
     weapons = Weapon.select_by_faction(faction)
-    {:ok, assign(socket, faction: faction, factions: Faction.factions(), available_fireteams: fireteams, available_weapons: weapons, weapons: [])}
+    {:ok, assign(socket,
+      faction: faction,
+      factions: Faction.factions(),
+      available_fireteams: fireteams,
+      fireteam: nil,
+      available_weapons: weapons,
+      weapons: []
+    )}
   end
 
-  def handle_event("update", %{"faction" => faction_id}, socket) do
+  def handle_event("update", %{"faction" => faction_id, "fireteam" => fireteam_id}, socket) do
     faction = Faction.select(faction_id)
+
     available_fireteams = Fireteam.select_by_faction(faction)
+    fireteam = available_fireteams
+    |> Enum.find(nil, fn t -> t.id == fireteam_id end)
+    remaining_fireteams = available_fireteams
+    |> Enum.filter(fn t -> t.id != fireteam_id end)
+
     available_weapons = Weapon.select_by_faction(faction)
+
     {:noreply, assign(socket,
       faction: faction,
-      available_fireteams: available_fireteams,
+      available_fireteams: remaining_fireteams,
+      fireteam: fireteam,
       available_weapons: available_weapons,
       weapons: []
       )}
