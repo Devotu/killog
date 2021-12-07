@@ -42,4 +42,13 @@ defmodule Killog.UtilTest do
     assert {:error, "name to long"} = Util.validate_name "something longer than 50 characters which would just be redicilous"
     assert {:error, "name includes invalid characters"} = Util.validate_name "something containing funky stuff like ' and )"
   end
+
+  test "put in list" do
+    first_list = ["a", "b"]
+    second_list = ["c", "d"]
+    empty_list = []
+
+    assert {["b"], ["a"]} == Util.switch_list("a", first_list, empty_list)
+    assert {["b"], ["c", "d", "a"]} == Util.switch_list("a", first_list, second_list)
+  end
 end

@@ -100,4 +100,14 @@ defmodule Killog.Util do
     |> String.contains?(["(", ")", ":", ";", "{", "}", "+", "!", "?", "'", "/", "\\"])
     |> then(&(!&1))
   end
+
+  def switch_list(item, from_list, to_list) do
+    from_list = from_list
+    |> Enum.filter(fn i -> i != item end)
+
+    to_list = to_list ++ [item]
+    |> Enum.uniq()
+
+    {from_list, to_list}
+  end
 end

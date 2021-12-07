@@ -44,12 +44,7 @@ defmodule KillogWeb.UnitLive do
 
   def handle_event("add_weapon", %{"value" => weapon_id}, socket) do
     weapon = Weapon.select_by_id(weapon_id)
-
-    available_weapons = socket.assigns.available_weapons
-    |> Enum.filter(fn w -> w.id != weapon.id end)
-
-    used_weapons = socket.assigns.weapons ++ [weapon]
-    |> Enum.uniq()
+    {available_weapons, used_weapons} = Util.switch_list(weapon, socket.assigns.available_weapons, socket.assigns.weapons)
 
     {:noreply, assign(socket,
       available_weapons: available_weapons,
@@ -59,12 +54,7 @@ defmodule KillogWeb.UnitLive do
 
   def handle_event("remove_weapon", %{"value" => weapon_id}, socket) do
     weapon = Weapon.select_by_id(weapon_id)
-
-    used_weapons = socket.assigns.weapons
-    |> Enum.filter(fn w -> w.id != weapon.id end)
-
-    available_weapons = socket.assigns.available_weapons ++ [weapon]
-    |> Enum.uniq()
+    {used_weapons, available_weapons} = Util.switch_list(weapon, socket.assigns.weapons, socket.assigns.available_weapons)
 
     {:noreply, assign(socket,
       available_weapons: available_weapons,
