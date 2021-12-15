@@ -66,7 +66,7 @@ defmodule Killog.Modules.Weapon do
     |> Util.validate("faction", :atom)
   end
 
-  def select_by_faction(%Faction{} = faction) do
+  def list_by_faction(%Faction{} = faction) do
     @module_name
     |> Data.list_ids()
     |> Enum.map(fn id -> Data.recall_state(id) end)

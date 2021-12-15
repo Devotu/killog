@@ -20,6 +20,13 @@
         <% end %>
       </select>
       <div class="clicksize">
+        <p class="label v-space">Name:
+          <div class="">
+            <input class="" type="text" name="name"  value="" placeholder="Name"/>
+          </div>
+        </p>
+      </div>
+      <div class="clicksize">
         <p class="label v-space">Move:
           <div class="">
             <input class="" type="text" name="m"  value="" placeholder="M"/>
@@ -63,18 +70,9 @@
       </div>
       <div class="clicksize">
         <p class="label v-space">Weapons:</p>
-        <p class="label v-space">Available:
           <%= for %{id: id, name: name} <- @available_weapons do %>
-            <button type="button" phx-click="add_weapon" value="<%= id %>">
-              <%= name %>
-            </button>
-          <% end %>
-        </p>
-        <p class="label v-space">Using:
-          <%= for %{id: id, name: name} <- @weapons do %>
-            <button type="button" phx-click="remove_weapon" value="<%= id %>">
-              <%= name %>
-            </button>
+            <input type="checkbox" name="<%= id %>" value="true">
+              <%= name %></br>
           <% end %>
         </p>
       </div>

@@ -25,10 +25,22 @@ defmodule Killog.Modules.Fireteam do
     end
   end
 
-  def select_by_faction(%Faction{} = faction) do
+  def list_by_faction(%Faction{} = faction) do
+    list()
+    |> Enum.filter(fn ft -> faction.id == ft.faction end)
+  end
+
+  def list() do
     @module_name
     |> Data.list_ids()
     |> Enum.map(fn id -> Data.recall_state(id) end)
-    |> Enum.filter(fn ft -> faction.id == ft.faction end)
+  end
+
+  def select(selected) when is_bitstring(selected) do
+    list()
+    |> Enum.find(
+      {:error, "fire team not found"},
+      fn %Fireteam{id: id} -> selected == id end
+    )
   end
 end

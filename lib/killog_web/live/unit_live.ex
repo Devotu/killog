@@ -10,8 +10,8 @@ defmodule KillogWeb.UnitLive do
   @impl true
   def mount(_params, _session, socket) do
     faction = Faction.factions() |> List.first()
-    fireteams = Fireteam.select_by_faction(faction)
-    weapons = Weapon.select_by_faction(faction)
+    fireteams = Fireteam.list_by_faction(faction)
+    weapons = Weapon.list_by_faction(faction)
     {:ok, assign(socket,
       faction: faction,
       factions: Faction.factions(),
@@ -25,13 +25,13 @@ defmodule KillogWeb.UnitLive do
   def handle_event("update", %{"faction" => faction_id, "fireteam" => fireteam_id}, socket) do
     faction = Faction.select(faction_id)
 
-    available_fireteams = Fireteam.select_by_faction(faction)
+    available_fireteams = Fireteam.list_by_faction(faction)
     fireteam = available_fireteams
     |> Enum.find(nil, fn t -> t.id == fireteam_id end)
     remaining_fireteams = available_fireteams
     |> Enum.filter(fn t -> t.id != fireteam_id end)
 
-    available_weapons = Weapon.select_by_faction(faction)
+    available_weapons = Weapon.list_by_faction(faction)
 
     {:noreply, assign(socket,
       faction: faction,
@@ -42,33 +42,36 @@ defmodule KillogWeb.UnitLive do
       )}
   end
 
-  def handle_event("add_weapon", %{"value" => weapon_id}, socket) do
-    weapon = Weapon.select_by_id(weapon_id)
-    {available_weapons, used_weapons} = Util.switch_list(weapon, socket.assigns.available_weapons, socket.assigns.weapons)
+  # def handle_event("add_weapon", %{"value" => weapon_id}, socket) do
+  #   weapon = Weapon.select_by_id(weapon_id)
+  #   {available_weapons, used_weapons} = Util.switch_list(weapon, socket.assigns.available_weapons, socket.assigns.weapons)
 
-    {:noreply, assign(socket,
-      available_weapons: available_weapons,
-      weapons: used_weapons
-      )}
-  end
+  #   {:noreply, assign(socket,
+  #     available_weapons: available_weapons,
+  #     weapons: used_weapons
+  #     )}
+  # end
 
-  def handle_event("remove_weapon", %{"value" => weapon_id}, socket) do
-    weapon = Weapon.select_by_id(weapon_id)
-    {used_weapons, available_weapons} = Util.switch_list(weapon, socket.assigns.weapons, socket.assigns.available_weapons)
+  # def handle_event("remove_weapon", %{"value" => weapon_id}, socket) do
+  #   weapon = Weapon.select_by_id(weapon_id)
+  #   {used_weapons, available_weapons} = Util.switch_list(weapon, socket.assigns.weapons, socket.assigns.available_weapons)
 
-    {:noreply, assign(socket,
-      available_weapons: available_weapons,
-      weapons: used_weapons
-      )}
-  end
+  #   {:noreply, assign(socket,
+  #     available_weapons: available_weapons,
+  #     weapons: used_weapons
+  #     )}
+  # end
 
   @impl true
-  def handle_event("add", %{"name" => name, "faction" => faction} = input, socket) do
+  def handle_event("add", %{"name" => name, "fireteam" => fireteam} = input, socket) do
     clean_input = input
-    |> Map.put("special", [])
-    |> Map.put("critical", [])
-    |> Map.put("faction", Faction.select(faction).id)
+    |> IO.inspect(label: "input")
+    |> Map.put("weapons", [])
+    |> Map.put("abilities", [])
+    |> Map.put("actions", [])
+    |> Map.put("fireteam", Fireteam.select(fireteam).id)
     |> Util.value_inputs_to_numbers()
+    |> IO.inspect(label: "clean input")
 
     case Unit.create(clean_input) do
       {:error, e} ->
