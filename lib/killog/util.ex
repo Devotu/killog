@@ -110,4 +110,47 @@ defmodule Killog.Util do
 
     {from_list, to_list}
   end
+
+  def struct_to_pretty(s) when is_struct(s) do
+    Kernel.inspect(s) |> pretty()
+  end
+  def struct_to_pretty(s) do
+    IO.inspect Kernel.inspect(s), label: "Helpers - struct_to_pretty - not a struct"
+  end
+
+  defp pretty(s) when is_bitstring(s) do
+    pretty(0, s)
+  end
+  defp pretty(_d, "") do
+    ""
+  end
+  defp pretty(d, "{" <> rem) do
+    dn = d + 1
+    "{" <> "\n" <> tabs(dn) <> pretty(dn, String.trim(rem))
+  end
+  defp pretty(d, "}" <> rem) do
+    dn = d - 1
+    "\n" <> tabs(dn) <> "}" <> pretty(dn, String.trim(rem))
+  end
+  defp pretty(d, "[]" <> rem) do
+    "[]" <> pretty(d, String.trim(rem))
+  end
+  defp pretty(d, "[" <> rem) do
+    dn = d + 1
+    "[" <> "\n" <> tabs(dn) <> pretty(dn, String.trim(rem))
+  end
+  defp pretty(d, "]" <> rem) do
+    dn = d - 1
+    "\n" <> tabs(dn) <> "]" <> pretty(dn, String.trim(rem))
+  end
+  defp pretty(d, "," <> rem) do
+    "," <> "\n" <> tabs(d) <> pretty(d, String.trim(rem))
+  end
+  defp pretty(d, s) do
+    {c, rem} = String.split_at(s, 1)
+    c <> pretty(d, rem)
+  end
+  defp tabs(n) do
+    String.duplicate("\t", n)
+  end
 end

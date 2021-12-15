@@ -25,6 +25,8 @@ defmodule KillogWeb.Router do
     live "/roster/new", RosterLive, :index
     live "/unit/new", UnitLive, :index
     live "/weapon/new", WeaponLive, :index
+
+    live "/:id/state", StateLive
   end
 
   # Other scopes may use custom stacks.
