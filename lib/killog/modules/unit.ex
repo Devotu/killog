@@ -39,7 +39,6 @@ defmodule Killog.Modules.Unit do
 
   #Names in input taken from data cards
   defp new(input) do
-    IO.inspect input, label: "input new unit"
     case is_valid_input(input) do
       {:error, e} -> Error.new(e)
       _ ->

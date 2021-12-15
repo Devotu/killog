@@ -1,4 +1,4 @@
-defmodule KillogWeb.UnitLive do
+defmodule KillogWeb.UnitNewLive do
   use KillogWeb, :live_view
 
   alias Killog.Modules.Faction
@@ -42,36 +42,14 @@ defmodule KillogWeb.UnitLive do
       )}
   end
 
-  # def handle_event("add_weapon", %{"value" => weapon_id}, socket) do
-  #   weapon = Weapon.select_by_id(weapon_id)
-  #   {available_weapons, used_weapons} = Util.switch_list(weapon, socket.assigns.available_weapons, socket.assigns.weapons)
-
-  #   {:noreply, assign(socket,
-  #     available_weapons: available_weapons,
-  #     weapons: used_weapons
-  #     )}
-  # end
-
-  # def handle_event("remove_weapon", %{"value" => weapon_id}, socket) do
-  #   weapon = Weapon.select_by_id(weapon_id)
-  #   {used_weapons, available_weapons} = Util.switch_list(weapon, socket.assigns.weapons, socket.assigns.available_weapons)
-
-  #   {:noreply, assign(socket,
-  #     available_weapons: available_weapons,
-  #     weapons: used_weapons
-  #     )}
-  # end
-
   @impl true
   def handle_event("add", %{"name" => name, "fireteam" => fireteam} = input, socket) do
     clean_input = input
-    |> IO.inspect(label: "input")
     |> Map.put("weapons", [])
     |> Map.put("abilities", [])
     |> Map.put("actions", [])
     |> Map.put("fireteam", Fireteam.select(fireteam).id)
     |> Util.value_inputs_to_numbers()
-    |> IO.inspect(label: "clean input")
 
     case Unit.create(clean_input) do
       {:error, e} ->

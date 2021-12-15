@@ -1,4 +1,4 @@
-defmodule KillogWeb.MainLive do
+defmodule KillogWeb.MainNewLive do
   use KillogWeb, :live_view
 
   alias Dmage.Range.Calculator

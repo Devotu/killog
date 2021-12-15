@@ -1,16 +1,16 @@
-defmodule KillogWeb.PlayerLive do
+defmodule KillogWeb.TacopNewLive do
   use KillogWeb, :live_view
 
-  alias Killog.Modules.Player
+  alias Killog.Modules.Tacop
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, attack: 0, results: [])}
+    {:ok, assign(socket, archetypes: Tacop.archetypes)}
   end
 
   @impl true
-  def handle_event("add", %{"name" => name} = input, socket) do
-    case Player.create(input) do
+  def handle_event("add", %{"name" => name, "archetype" => _archetype} = input, socket) do
+    case Tacop.create(input) do
       {:error, e} ->
         {:noreply, put_flash(socket, :error, "#{name} not added,  #{e}")}
       {:ok} ->

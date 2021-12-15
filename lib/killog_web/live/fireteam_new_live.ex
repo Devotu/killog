@@ -1,7 +1,7 @@
-defmodule KillogWeb.EquipmentLive do
+defmodule KillogWeb.FireteamNewLive do
   use KillogWeb, :live_view
 
-  alias Killog.Modules.Equipment
+  alias Killog.Modules.Fireteam
   alias Killog.Modules.Faction
 
   @impl true
@@ -14,7 +14,7 @@ defmodule KillogWeb.EquipmentLive do
     clean_input = input
     |> Map.put("faction", Faction.select(faction).id)
 
-    case Equipment.create(clean_input) do
+    case Fireteam.create(clean_input) do
       {:error, e} ->
         {:noreply, put_flash(socket, :error, "#{name} not added,  #{e}")}
       {:ok} ->

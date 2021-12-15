@@ -18,13 +18,13 @@ defmodule KillogWeb.Router do
     pipe_through :browser
 
     live "/", MainLive, :index
-    live "/equipment/new", EquipmentLive, :index
-    live "/fireteam/new", FireteamLive, :index
-    live "/player/new", PlayerLive, :index
-    live "/tacop/new", TacopLive, :index
-    live "/roster/new", RosterLive, :index
-    live "/unit/new", UnitLive, :index
-    live "/weapon/new", WeaponLive, :index
+    live "/equipment/new", EquipmentNewLive, :index
+    live "/fireteam/new", FireteamNewLive, :index
+    live "/player/new", PlayerNewLive, :index
+    live "/tacop/new", TacopNewLive, :index
+    live "/roster/new", RosterNewLive, :index
+    live "/unit/new", UnitNewLive, :index
+    live "/weapon/new", WeaponNewLive, :index
 
     live "/:id/state", StateLive
   end
