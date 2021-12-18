@@ -1,4 +1,4 @@
-defmodule KillogWeb.StateNewLive do
+defmodule KillogWeb.StateLive do
   use KillogWeb, :live_view
 
   alias Killog.Data

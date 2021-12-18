@@ -11,3 +11,12 @@
 .block {
     margin-right: 12px;
 }
+
+td {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+table {
+    border-spacing: 0px;
+}

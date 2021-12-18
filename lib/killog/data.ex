@@ -19,6 +19,10 @@ defmodule Killog.Data do
     Trail.trace(id)
   end
 
+  def recall_state(ids) when is_list(ids) do
+    ids
+    |> Enum.map(&recall_state/1)
+  end
   def recall_state(id) when is_bitstring(id) do
     Trail.recall(id)
   end

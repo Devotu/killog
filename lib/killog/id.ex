@@ -36,4 +36,10 @@ defmodule Killog.Id do
     |> Enum.concat([Enum.random(10..99) |> Integer.to_string()])
     |> Enum.join("_")
   end
+
+  def extract_type(id) when is_bitstring(id) do
+    id
+    |> String.split("_")
+    |> List.first()
+  end
 end

@@ -26,6 +26,7 @@ defmodule KillogWeb.Router do
     live "/unit/new", UnitNewLive, :index
     live "/weapon/new", WeaponNewLive, :index
 
+    live "/list", ListLive
     live "/:id/state", StateLive
   end
 
