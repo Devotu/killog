@@ -51,6 +51,7 @@ defmodule KillogWeb.ListLive do
     ++ Data.list_ids(:player)
     ++ Data.list_ids(:tacop)
     ++ Data.list_ids(:weapon)
+    ++ Data.list_ids(:roster)
     |> Data.recall_state()
 
     {:ok, assign(socket, states: states, confirm: false)}
